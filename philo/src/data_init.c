@@ -6,8 +6,13 @@
 /*   By: akeldiya <akeldiya@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 22:47:11 by akeldiya          #+#    #+#             */
-/*   Updated: 2024/07/15 22:47:22 by akeldiya         ###   ########.fr       */
+/*   Updated: 2024/07/16 11:12:13 by akeldiya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
+
+int data_loader(t_data **data_result)
+{
+
+}
