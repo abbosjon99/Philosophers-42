@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeldiya <akeldiya@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: akeldiya <akeldiya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 12:40:02 by akeldiya          #+#    #+#             */
-/*   Updated: 2024/07/03 18:32:55 by akeldiya         ###   ########.fr       */
+/*   Updated: 2024/07/16 21:17:38 by akeldiya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 typedef struct s_fork	t_fork;
 
+// needs2eat; // how many time philo needs to eat
 typedef struct s_philo
 {
 	int					id;
@@ -35,7 +36,6 @@ typedef struct s_philo
 	long				last_meal;
 	t_fork				*l_fork;
 	t_fork				*r_fork;
-	struct s_philo		*philo_nxt;
 }						t_philo;
 
 typedef pthread_mutex_t	t_pmt;
@@ -43,7 +43,7 @@ typedef pthread_mutex_t	t_pmt;
 struct					s_fork
 {
 	int					fork_id;
-	t_pmt				fork;
+	t_pmt				*fork;
 };
 
 typedef struct s_data
@@ -61,5 +61,7 @@ typedef struct s_data
 int						err_arguments(void);
 int						load_argv(t_data **data_result, int argc, char **argv);
 int						err_wrong_arg(t_data **data);
+int						data_loader(t_data **data_result);
+int						data_process(t_data **data_result);
 
 #endif

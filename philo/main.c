@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeldiya <akeldiya@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: akeldiya <akeldiya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 12:46:38 by akeldiya          #+#    #+#             */
-/*   Updated: 2024/07/03 18:37:29 by akeldiya         ###   ########.fr       */
+/*   Updated: 2024/07/16 21:16:28 by akeldiya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	main(int argc, char **argv)
 		return (err_arguments());
 	if (!load_argv(&data, argc, argv))
 		return (err_wrong_arg(&data));
-	//data loader
-	// process
+	data_loader(&data);
+	// ERROR CASE!!!!
+	data_process(&data);
 	//free
 }
