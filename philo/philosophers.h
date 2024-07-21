@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeldiya <akeldiya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeldiya <akeldiya@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 12:40:02 by akeldiya          #+#    #+#             */
-/*   Updated: 2024/07/16 21:17:38 by akeldiya         ###   ########.fr       */
+/*   Updated: 2024/07/21 20:36:12 by akeldiya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,7 @@ int						load_argv(t_data **data_result, int argc, char **argv);
 int						err_wrong_arg(t_data **data);
 int						data_loader(t_data **data_result);
 int						data_process(t_data **data_result);
+int						free_data(t_data **all_data, int return_val);
+int						my_err(char *str, int for_return);
 
 #endif

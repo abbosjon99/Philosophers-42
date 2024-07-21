@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeldiya <akeldiya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeldiya <akeldiya@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 12:46:38 by akeldiya          #+#    #+#             */
-/*   Updated: 2024/07/16 21:16:28 by akeldiya         ###   ########.fr       */
+/*   Updated: 2024/07/21 20:31:27 by akeldiya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ int	main(int argc, char **argv)
 	data_loader(&data);
 	// ERROR CASE!!!!
 	data_process(&data);
-	//free
+	return (free_data(&data, 0));
 }

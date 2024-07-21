@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   data_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeldiya <akeldiya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeldiya <akeldiya@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 22:47:11 by akeldiya          #+#    #+#             */
-/*   Updated: 2024/07/16 16:10:34 by akeldiya         ###   ########.fr       */
+/*   Updated: 2024/07/21 20:34:18 by akeldiya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
 
-//initializing forks
-//initializing philos
-//assigning id to forks
+// initializing forks
+// initializing philos
+// assigning id to forks
 ////////////////////////////////MALLOC SHOULD BE DONE!!!!!!!!!
-int data_loader(t_data **data_result)
+int	data_loader(t_data **data_result)
 {
 	t_data	*data;
-	int i;
+	int		i;
 
 	data = *data_result;
 	data->forks = (t_fork *)malloc(sizeof(t_fork) * data->philo_num);
