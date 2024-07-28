@@ -6,7 +6,7 @@
 /*   By: akeldiya <akeldiya@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 15:25:19 by akeldiya          #+#    #+#             */
-/*   Updated: 2024/07/21 20:41:07 by akeldiya         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:00:49 by akeldiya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	load_argv(t_data **data_result, int argc, char **argv)
 	if (argc == 6)
 		data->need2eat = ft_atol(argv[5]);
 	if (!data->philo_num || !data->time2die || !data->time2eat
-		|| !data->time2sleep || data->need2eat == 0)
-		return (free_data(&data, 0));
+		|| !data->time2sleep)
+		return (0);
 	return (1);
 }
