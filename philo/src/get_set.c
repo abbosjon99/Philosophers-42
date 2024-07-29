@@ -6,7 +6,7 @@
 /*   By: akeldiya <akeldiya@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 11:51:54 by akeldiya          #+#    #+#             */
-/*   Updated: 2024/07/29 11:55:10 by akeldiya         ###   ########.fr       */
+/*   Updated: 2024/07/29 20:47:31 by akeldiya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,32 @@ bool	get_bool(t_pmt *mtx, bool *src, t_data *data)
 	if (pthread_mutex_lock(mtx))
 	{
 		set_get_error(data, true, SET);
-		return (my_err("MUTEX ERROR!!!!!", *src));
+		return (my_err("MUTEX ERROR!!!!!", false));
 	}
 	result = *src;
 	if (pthread_mutex_unlock(mtx))
 	{
 		set_get_error(data, true, SET);
 		return (my_err("MUTEX ERROR!!!!!", result));
+	}
+	return (result);
+}
+
+// for getting lastmeal
+long	get_lastmeal(t_philo *philo, t_data *data)
+{
+	long	result;
+
+	if (pthread_mutex_lock(&philo->philo_mtx))
+	{
+		set_get_error(data, true, SET);
+		return (my_err("MUTEX ERROR!!!!!", 0));
+	}
+	result = philo->last_meal;
+	if (pthread_mutex_unlock(&philo->philo_mtx))
+	{
+		set_get_error(data, true, SET);
+		return (my_err("MUTEX ERROR!!!!!", 0));
 	}
 	return (result);
 }

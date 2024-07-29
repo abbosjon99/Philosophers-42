@@ -6,7 +6,7 @@
 /*   By: akeldiya <akeldiya@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 12:40:02 by akeldiya          #+#    #+#             */
-/*   Updated: 2024/07/29 16:09:56 by akeldiya         ###   ########.fr       */
+/*   Updated: 2024/07/29 20:51:46 by akeldiya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 typedef struct s_fork	t_fork;
 typedef struct s_data	t_data;
+typedef pthread_mutex_t	t_pmt;
 
 // needs2eat; // how many time philo needs to eat
 typedef struct s_philo
@@ -38,9 +39,8 @@ typedef struct s_philo
 	t_fork				*uno_fork;
 	t_fork				*dos_fork;
 	t_data				*data;
+	t_pmt				philo_mtx;
 }						t_philo;
-
-typedef pthread_mutex_t	t_pmt;
 
 struct					s_fork
 {
@@ -59,9 +59,10 @@ struct					s_data
 	bool				over;
 	bool				all_ready;
 	bool				internal_error;
+	t_pmt				table_mtx;
+	t_pmt				ready_mtx;
 	t_pmt				error_mtx;
 	int					table_error_mtx_init;
-	t_pmt				table_mtx;
 	t_fork				*forks;
 	t_philo				*philos;
 };
@@ -76,6 +77,7 @@ typedef enum e_print
 {
 	FORK,
 	EAT,
+	SLEEP,
 	THINK,
 	DIED
 }						t_print;
@@ -86,6 +88,7 @@ int						err_wrong_arg(t_data **data);
 int						initialize(t_data *data);
 int						data_process(t_data *data);
 int						free_data(t_data **all_data, int return_val);
+int						free_only_data(t_data **all_data, int return_val);
 int						my_err(char *str, int for_return);
 int						set_bool(t_pmt *mtx, bool *dest, bool value,
 							t_data *data);
@@ -97,5 +100,8 @@ bool					set_get_error(t_data *data, bool value,
 bool					set_get_over(t_data *data, bool value,
 							t_get_set get_set);
 void					pro_sleep(long need2sleep, t_data *data);
+void					print_stats(t_philo *philo, t_print option);
+long					get_lastmeal(t_philo *philo, t_data *data);
+long					set_lastmeal(t_philo *philo, t_data *data);
 
 #endif
