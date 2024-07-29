@@ -6,7 +6,7 @@
 /*   By: akeldiya <akeldiya@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 00:10:51 by akeldiya          #+#    #+#             */
-/*   Updated: 2024/07/29 20:47:48 by akeldiya         ###   ########.fr       */
+/*   Updated: 2024/07/29 21:30:00 by akeldiya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	print_stats(t_philo *philo, t_print option)
 	timestamp = get_time(true, philo->data) - philo->data->start_time;
 	if (option == DIED && !set_get_error(philo->data, false, GET))
 		printf("%-6ld %d died\n", timestamp, philo->id);
-	else if (set_get_over(philo->data, false, GET)
-		|| set_get_error(philo->data, false, GET))
+	else if (set_get_over(philo->data, false, GET) || set_get_error(philo->data,
+			false, GET))
 		return ;
 	if (option == FORK)
 		printf("%-6ld %d has taken a fork\n", timestamp, philo->id);
@@ -75,21 +75,4 @@ void	till_all_ready(t_data *data)
 {
 	while (!get_bool(&data->table_mtx, &data->all_ready, data))
 		;
-}
-
-// for setting the lastmeal
-long	set_lastmeal(t_philo *philo, t_data *data)
-{
-	if (pthread_mutex_lock(&philo->philo_mtx))
-	{
-		set_get_error(data, true, SET);
-		return (my_err("MUTEX ERROR!!!!!", 1));
-	}
-	philo->last_meal = get_time(true, data);
-	if (pthread_mutex_unlock(&philo->philo_mtx))
-	{
-		set_get_error(data, true, SET);
-		return (my_err("MUTEX ERROR!!!!!", 1));
-	}
-	return (0);
 }

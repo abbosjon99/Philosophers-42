@@ -6,7 +6,7 @@
 /*   By: akeldiya <akeldiya@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 12:40:02 by akeldiya          #+#    #+#             */
-/*   Updated: 2024/07/29 20:51:46 by akeldiya         ###   ########.fr       */
+/*   Updated: 2024/07/29 22:08:41 by akeldiya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,12 @@ typedef enum e_get_set
 	SET
 }						t_get_set;
 
+typedef enum e_lock_unlock
+{
+	LOCK,
+	UNLOCK
+}						t_lock_unlock;
+
 typedef enum e_print
 {
 	FORK,
@@ -90,6 +96,8 @@ int						data_process(t_data *data);
 int						free_data(t_data **all_data, int return_val);
 int						free_only_data(t_data **all_data, int return_val);
 int						my_err(char *str, int for_return);
+int						safe_mtx(t_pmt *mtx, t_data *data,
+							t_lock_unlock option);
 int						set_bool(t_pmt *mtx, bool *dest, bool value,
 							t_data *data);
 long					get_time(bool isit_millisecond, t_data *data);
@@ -103,5 +111,6 @@ void					pro_sleep(long need2sleep, t_data *data);
 void					print_stats(t_philo *philo, t_print option);
 long					get_lastmeal(t_philo *philo, t_data *data);
 long					set_lastmeal(t_philo *philo, t_data *data);
+long					set_starttime(t_philo *philo, t_data *data);
 
 #endif
