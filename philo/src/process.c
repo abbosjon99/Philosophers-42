@@ -6,18 +6,20 @@
 /*   By: akeldiya <akeldiya@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:46:14 by akeldiya          #+#    #+#             */
-/*   Updated: 2024/07/29 00:38:30 by akeldiya         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:02:31 by akeldiya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
 
-void	*a_philo(void *arg)
+// automaticly stops if over or internal error
+static void	*a_philo(void *data)
 {
 	t_philo	*philo;
 
-	philo = (t_philo *)arg;
-	while (philo->needs2eat != 0)
+	philo = (t_philo *)data;
+	while (philo->needs2eat != 0 && !set_get_over(philo->data, true, GET)
+		&& !set_get_error(philo->data, true, GET))
 	{
 		pthread_mutex_lock(&philo->uno_fork->fork);
 		printf("%d has taken %d fork\n", philo->id, philo->uno_fork->fork_id);
@@ -36,20 +38,22 @@ void	*a_philo(void *arg)
 	return (NULL);
 }
 
-int	data_process(t_data **data_result)
+// return 1 if any error
+int	data_process(t_data *data)
 {
-	t_data	*data;
-	int		i;
+	int	i;
 
-	data = *data_result;
 	i = 0;
-//	data->start_time = gettimeofday();
 	while (i < data->philo_num)
 	{
-		pthread_create(&data->philos[i].thread_id, NULL, a_philo,
-			&data->philos[i]);
+		if (pthread_create(&data->philos[i].thread_id, NULL, a_philo,
+				&data->philos[i]))
+			return (my_err("PTHREAD ERROR!!!!!", 1));
 		i++;
 	}
+	data->start_time = get_time(true, data);
+	set_bool(&data->table_mtx, &data->all_ready, true, data);
+	// need to implement watchdog!!!
 	i = 0;
 	while (i < data->philo_num)
 	{

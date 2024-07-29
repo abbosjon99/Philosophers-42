@@ -6,7 +6,7 @@
 /*   By: akeldiya <akeldiya@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 15:25:19 by akeldiya          #+#    #+#             */
-/*   Updated: 2024/07/22 16:00:49 by akeldiya         ###   ########.fr       */
+/*   Updated: 2024/07/29 10:52:31 by akeldiya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	load_argv(t_data **data_result, int argc, char **argv)
 	if (!data)
 		return (my_err("MALLOC ERROR!!!!!", 0));
 	*data_result = data;
+	data->philos = NULL;
+	data->forks = NULL;
 	data->philo_num = ft_atol(argv[1]);
 	data->time2die = ft_atol(argv[2]);
 	data->time2eat = ft_atol(argv[3]);
