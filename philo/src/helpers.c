@@ -6,7 +6,7 @@
 /*   By: akeldiya <akeldiya@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 00:10:51 by akeldiya          #+#    #+#             */
-/*   Updated: 2024/07/30 02:14:09 by akeldiya         ###   ########.fr       */
+/*   Updated: 2024/07/30 02:58:44 by akeldiya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@ void	print_stats(t_ph *ph, t_print option)
 {
 	long	timestamp;
 
+	if (pthread_mutex_lock(&ph->data->ready_mtx))
+		set_get_err(ph->data, true, SET);
 	timestamp = get_time(true, ph->data) - ph->data->start_time;
 	if (option == DIED && !set_get_err(ph->data, false, GET))
 		printf("%-6ld %d died\n", timestamp, ph->id);
 	else if (set_get_over(ph->data, false, GET) || set_get_err(ph->data, false,
 			GET))
-		return ;
-	if (option == FORK)
+		;
+	else if (option == FORK)
 		printf("%-6ld %d has taken a fork\n", timestamp, ph->id);
 	else if (option == EAT)
 		printf("%-6ld %d is eating\n", timestamp, ph->id);
@@ -30,6 +32,8 @@ void	print_stats(t_ph *ph, t_print option)
 		printf("%-6ld %d is sleeping\n", timestamp, ph->id);
 	else if (option == THINK)
 		printf("%-6ld %d is thinking\n", timestamp, ph->id);
+	if (pthread_mutex_unlock(&ph->data->ready_mtx))
+		set_get_err(ph->data, true, SET);
 }
 
 // how many milliseconds we need to sleep
