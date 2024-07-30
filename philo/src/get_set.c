@@ -6,7 +6,7 @@
 /*   By: akeldiya <akeldiya@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 11:51:54 by akeldiya          #+#    #+#             */
-/*   Updated: 2024/07/29 21:15:04 by akeldiya         ###   ########.fr       */
+/*   Updated: 2024/07/29 23:34:57 by akeldiya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ bool	set_get_over(t_data *data, bool value, t_get_set get_set)
 {
 	if (pthread_mutex_lock(&data->table_mtx))
 	{
-		set_get_error(data, true, SET);
+		set_get_err(data, true, SET);
 		return (my_err("MUTEX ERROR!!!!!", value));
 	}
 	if (get_set == SET)
@@ -25,7 +25,7 @@ bool	set_get_over(t_data *data, bool value, t_get_set get_set)
 		value = data->over;
 	if (pthread_mutex_unlock(&data->table_mtx))
 	{
-		set_get_error(data, true, SET);
+		set_get_err(data, true, SET);
 		return (my_err("MUTEX ERROR!!!!!", value));
 	}
 	return (value);
@@ -33,7 +33,7 @@ bool	set_get_over(t_data *data, bool value, t_get_set get_set)
 
 // No possible way to check if pthread leads to error,
 // since we are not allowed to use exit()
-bool	set_get_error(t_data *data, bool value, t_get_set get_set)
+bool	set_get_err(t_data *data, bool value, t_get_set get_set)
 {
 	pthread_mutex_lock(&data->error_mtx);
 	if (get_set == SET)
@@ -49,13 +49,13 @@ int	set_bool(t_pmt *mtx, bool *dest, bool value, t_data *data)
 {
 	if (pthread_mutex_lock(mtx))
 	{
-		set_get_error(data, true, SET);
+		set_get_err(data, true, SET);
 		return (my_err("MUTEX ERROR!!!!!", 1));
 	}
 	*dest = value;
 	if (pthread_mutex_unlock(mtx))
 	{
-		set_get_error(data, true, SET);
+		set_get_err(data, true, SET);
 		return (my_err("MUTEX ERROR!!!!!", 1));
 	}
 	return (0);
@@ -68,13 +68,13 @@ bool	get_bool(t_pmt *mtx, bool *src, t_data *data)
 
 	if (pthread_mutex_lock(mtx))
 	{
-		set_get_error(data, true, SET);
+		set_get_err(data, true, SET);
 		return (my_err("MUTEX ERROR!!!!!", false));
 	}
 	result = *src;
 	if (pthread_mutex_unlock(mtx))
 	{
-		set_get_error(data, true, SET);
+		set_get_err(data, true, SET);
 		return (my_err("MUTEX ERROR!!!!!", result));
 	}
 	return (result);

@@ -6,7 +6,7 @@
 /*   By: akeldiya <akeldiya@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 22:47:11 by akeldiya          #+#    #+#             */
-/*   Updated: 2024/07/29 18:26:43 by akeldiya         ###   ########.fr       */
+/*   Updated: 2024/07/30 01:01:20 by akeldiya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static int	init_philos(int i, t_data *data)
 {
-	t_philo	*philo;
+	t_ph	*philo;
 
-	philo = &data->philos[i];
+	philo = &data->phs[i];
 	philo->data = data;
 	philo->id = -1;
-	if (pthread_mutex_init(&philo->philo_mtx, NULL))
+	if (pthread_mutex_init(&philo->ph_mtx, NULL))
 		return (my_err("MUTEX ERROR!!!!!", 1));
 	philo->id = i + 1;
 	philo->full = false;
@@ -27,12 +27,12 @@ static int	init_philos(int i, t_data *data)
 	if (i % 2 == 0)
 	{
 		philo->uno_fork = &data->forks[i];
-		philo->dos_fork = &data->forks[(i + 1) % data->philo_num];
+		philo->dos_fork = &data->forks[(i + 1) % data->ph_num];
 	}
 	else
 	{
 		philo->dos_fork = &data->forks[i];
-		philo->uno_fork = &data->forks[(i + 1) % data->philo_num];
+		philo->uno_fork = &data->forks[(i + 1) % data->ph_num];
 	}
 	return (0);
 }
@@ -40,7 +40,7 @@ static int	init_philos(int i, t_data *data)
 static int	init_helper(int i, t_data *data)
 {
 	i = 0;
-	while (i < data->philo_num)
+	while (i < data->ph_num)
 	{
 		data->forks[i].fork_id = -1;
 		if (pthread_mutex_init(&data->forks[i].fork, NULL))
@@ -54,7 +54,7 @@ static int	init_helper(int i, t_data *data)
 }
 
 // initializing forks
-// initializing philos
+// initializing philosophers
 // assigning id to forks
 // 1 if malloc or mutex error
 // I say fork id is -1 if mutex is not initialized yet
@@ -64,19 +64,19 @@ int	initialize(t_data *data)
 	data->over = false;
 	data->all_ready = false;
 	data->internal_error = false;
-	data->table_error_mtx_init = 0;
-	data->forks = (t_fork *)malloc(sizeof(t_fork) * data->philo_num);
-	data->philos = (t_philo *)malloc(sizeof(t_philo) * data->philo_num);
-	if (!data->forks || !data->philos)
+	data->data_err_mtx_init = 0;
+	data->forks = (t_fork *)malloc(sizeof(t_fork) * data->ph_num);
+	data->phs = (t_ph *)malloc(sizeof(t_ph) * data->ph_num);
+	if (!data->forks || !data->phs)
 		return (my_err("MALLOC ERROR!!!!!", 1));
 	if (pthread_mutex_init(&data->table_mtx, NULL))
 		return (my_err("MUTEX ERROR!!!!!", 1));
-	data->table_error_mtx_init++;
+	data->data_err_mtx_init++;
 	if (pthread_mutex_init(&data->error_mtx, NULL))
 		return (my_err("MUTEX ERROR!!!!!", 1));
-	data->table_error_mtx_init++;
+	data->data_err_mtx_init++;
 	if (pthread_mutex_init(&data->ready_mtx, NULL))
 		return (my_err("MUTEX ERROR!!!!!", 1));
-	data->table_error_mtx_init++;
+	data->data_err_mtx_init++;
 	return (init_helper(0, data));
 }
