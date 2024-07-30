@@ -6,7 +6,7 @@
 /*   By: akeldiya <akeldiya@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 01:40:19 by akeldiya          #+#    #+#             */
-/*   Updated: 2024/07/30 02:18:51 by akeldiya         ###   ########.fr       */
+/*   Updated: 2024/07/30 11:28:45 by akeldiya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@ static void	ft_think(t_ph *ph)
 {
 	int	time;
 
-	time = ph->data->time2die - ph->data->time2eat - ph->data->time2sleep;
-	if (time < 0)
-		time = 0;
 	print_stats(ph, THINK);
-	pro_sleep(time / 2, ph->data);
+	if (ph->data->ph_num % 2 != 0)
+	{
+		time = ph->data->time2die - ph->data->time2eat - ph->data->time2sleep;
+		if (time < 0)
+			time = 0;
+		pro_sleep(time / 2, ph->data);
+	}
 }
 
 // if philo num is even we will artificially pause some threads
