@@ -6,7 +6,7 @@
 /*   By: akeldiya <akeldiya@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:46:14 by akeldiya          #+#    #+#             */
-/*   Updated: 2024/07/30 01:42:05 by akeldiya         ###   ########.fr       */
+/*   Updated: 2024/07/30 03:19:45 by akeldiya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ int	data_process(t_data *d)
 		return (my_err("PTHREAD ERROR!!!!!", 1));
 	if (pthread_create(&wt_dog, NULL, ph_watchdog, d))
 		return (my_err("PTHREAD ERROR!!!!!", 1));
-	pthread_detach(wt_dog);
 	d->start_time = get_time(true, d);
 	set_bool(&d->ready_mtx, &d->all_ready, true, d);
 	i = -1;
 	while (++i < d->ph_num)
 		pthread_join(d->phs[i].thread_id, NULL);
 	set_get_over(d, true, SET);
+	pthread_join(wt_dog, NULL);
 	if (d->internal_error)
 		return (my_err("INTERNAL ERROR!!!!!", 1));
 	return (0);

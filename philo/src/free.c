@@ -6,7 +6,7 @@
 /*   By: akeldiya <akeldiya@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:51:28 by akeldiya          #+#    #+#             */
-/*   Updated: 2024/07/30 01:04:18 by akeldiya         ###   ########.fr       */
+/*   Updated: 2024/07/30 03:16:08 by akeldiya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	free_data(t_data **all_data, int return_val)
 			if (pthread_mutex_destroy(&data->table_mtx) != 0)
 				return_val = my_err("MUTEX DESTROYING ERROR!!!!!", 1);
 			if (data->data_err_mtx_init >= 2
-				&& pthread_mutex_destroy(&data->table_mtx) != 0)
+				&& pthread_mutex_destroy(&data->error_mtx) != 0)
 				return_val = my_err("MUTEX DESTROYING ERROR!!!!!", 1);
 			if (data->data_err_mtx_init == 3
 				&& pthread_mutex_destroy(&data->ready_mtx) != 0)
